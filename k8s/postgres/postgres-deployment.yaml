@@ -27,6 +27,7 @@ spec:
             value: votes
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
+            subPath: pgdata
             name: postgres-data
       volumes:
       - name: postgres-data
