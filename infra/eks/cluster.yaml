@@ -27,3 +27,7 @@ addons:
   - name: coredns
   - name: kube-proxy
   - name: aws-ebs-csi-driver
+  - name: eks-pod-identity-agent
+
+addonsConfig:
+  autoApplyPodIdentityAssociations: true

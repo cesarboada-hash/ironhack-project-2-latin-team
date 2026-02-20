@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ latin ]
   workflow_dispatch:
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-eks-role
+          role-to-assume: arn:aws:iam::686699774218:role/github-actions-eks-role
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Install eksctl
@@ -52,7 +52,7 @@ jobs:
           sudo mv /tmp/eksctl /usr/local/bin
 
       - name: Update Kubeconfig
-        run: eksctl utils write-kubeconfig --cluster YOUR-CLUSTER-NAME --region us-east-1
+        run: eksctl utils write-kubeconfig --cluster voting-app-cluster --region ${{ secrets.AWS_REGION }}
 
       - name: Deploy Kubernetes Manifests
         run: kubectl apply -f k8s/  # Asumiendo que tus YAMLs están en carpeta k8s/
