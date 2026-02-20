@@ -41,7 +41,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/worker:latest
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::686699774218:role/github-actions-eks-role
           aws-region: ${{ secrets.AWS_REGION }}
