@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: gp2
   resources:
     requests:
-      storage: 5Gi   # Ajusta a 5Gi si ya existe uno con ese tamaño (como en tu error anterior)
-  storageClassName: gp3  # O el StorageClass de tu cluster EKS (gp2 es común en AWS)
+      storage: 5Gi
