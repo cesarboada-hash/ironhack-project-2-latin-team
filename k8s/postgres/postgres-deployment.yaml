@@ -45,7 +45,7 @@ spec:
   resources:
     requests:
       storage: 5Gi          # ← Cambia a 5Gi (o el tamaño final que necesitas)
-  storageClassName: ebs-gp3
+  storageClassName: gp2
 ---
 
 apiVersion: v1
