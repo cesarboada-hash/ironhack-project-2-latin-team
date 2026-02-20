@@ -3,16 +3,11 @@ kind: Ingress
 metadata:
   name: voting-ingress
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
-  tls:
-  - hosts:
-      - example.com
-    secretName: voting-tls
   rules:
-  - host: example.com
-    http:
+  - http:
       paths:
       - path: /vote
         pathType: Prefix
