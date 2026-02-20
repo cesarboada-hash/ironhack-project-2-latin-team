@@ -8,4 +8,4 @@ spec:
   resources:
     requests:
       storage: 5Gi   # Ajusta a 5Gi si ya existe uno con ese tamaño (como en tu error anterior)
-  storageClassName: ebs-gp3  # O el StorageClass de tu cluster EKS (gp2 es común en AWS)
+  storageClassName: gp3  # O el StorageClass de tu cluster EKS (gp2 es común en AWS)
