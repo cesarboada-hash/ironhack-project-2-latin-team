@@ -54,5 +54,15 @@ jobs:
       - name: Update Kubeconfig
         run: eksctl utils write-kubeconfig --cluster voting-app-cluster --region ${{ secrets.AWS_REGION }}
 
+      - name: Add Node Role to aws-auth
+        run: |
+          eksctl create iamidentitymapping \
+            --cluster voting-app-cluster \
+            --region ${{ secrets.AWS_REGION }} \
+            --arn arn:aws:iam::686699774218:role/eksctl-voting-app-cluster-nodegrou-NodeInstanceRole-aUKH0ibs5vnT \
+            --username system:node:{{EC2PrivateDNSName}} \
+            --group system:bootstrappers \
+            --group system:nodes
+
       - name: Deploy Kubernetes Manifests
-        run: kubectl apply -f k8s/  # Asumiendo que YAMLs están en carpeta k8s/
+        run: kubectl apply -f k8s/  # Asumiendo YAMLs están en carpeta k8s/
