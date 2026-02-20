@@ -56,13 +56,18 @@ jobs:
 
       - name: Add Node Role to aws-auth
         run: |
-          eksctl create iamidentitymapping \
-            --cluster voting-app-cluster \
-            --region ${{ secrets.AWS_REGION }} \
-            --arn arn:aws:iam::686699774218:role/eksctl-voting-app-cluster-nodegrou-NodeInstanceRole-aUKH0ibs5vnT \
-            --username system:node:{{EC2PrivateDNSName}} \
-            --group system:bootstrappers \
-            --group system:nodes
+          aws eks update-kubeconfig \
+            --name voting-app-cluster \
+            --region ${{ secrets.AWS_REGION }}
+          kubectl patch configmap aws-auth -n kube-system --patch '
+          data:
+            mapRoles: |
+              - rolearn: arn:aws:iam::686699774218:role/eksctl-voting-app-cluster-nodegrou-NodeInstanceRole-aUKH0ibs5vnT
+                username: system:node:{{EC2PrivateDNSName}}
+                groups:
+                  - system:bootstrappers
+                  - system:nodes
+          '
 
       - name: Deploy Kubernetes Manifests
         run: kubectl apply -f k8s/  # Asumiendo YAMLs están en carpeta k8s/
