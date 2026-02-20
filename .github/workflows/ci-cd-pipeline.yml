@@ -1,4 +1,4 @@
-name: CI/CD to EKS
+name: CI/CD Pipeline
 
 on:
   push:
@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # For AWS OIDC
+      contents: read
 
     steps:
       - name: Checkout code
@@ -40,13 +43,16 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: sa-east-1
+          role-to-assume: arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-eks-role
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Update kubeconfig for EKS
+      - name: Install eksctl
         run: |
-          aws eks update-kubeconfig --name YOUR-CLUSTER-NAME --region us-east-1
+          curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+          sudo mv /tmp/eksctl /usr/local/bin
 
-      - name: Deploy to EKS
-        run: kubectl apply -f k8s/
+      - name: Update Kubeconfig
+        run: eksctl utils write-kubeconfig --cluster YOUR-CLUSTER-NAME --region us-east-1
+
+      - name: Deploy Kubernetes Manifests
+        run: kubectl apply -f k8s/  # Asumiendo que tus YAMLs están en carpeta k8s/
