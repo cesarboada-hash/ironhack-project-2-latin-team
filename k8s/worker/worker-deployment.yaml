@@ -34,14 +34,3 @@ spec:
                 key: POSTGRES_PASSWORD
           - name: DB_NAME
             value: votes
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: worker-service
-spec:
-  selector:
-    app: worker
-  type: ClusterIP  # Worker no necesita puerto externo

@@ -20,18 +20,3 @@ spec:
         env:
           - name: REDIS_HOST
             value: redis-service
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: vote-service
-spec:
-  selector:
-    app: vote
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP

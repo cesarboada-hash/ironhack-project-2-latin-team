@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: worker-service
-spec:
-  selector:
-    app: worker
-  type: ClusterIP  # No necesita puerto externo
