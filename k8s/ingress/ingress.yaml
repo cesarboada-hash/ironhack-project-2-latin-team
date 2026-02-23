@@ -9,7 +9,7 @@ spec:
   tls:
     - hosts:
         - app-vote-latin.com
-      secretName: voting-tls
+      secretName: voting-tls-selfsigned
   rules:
   - host: app-vote-latin.com
     http:
