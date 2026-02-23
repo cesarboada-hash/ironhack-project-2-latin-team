@@ -22,6 +22,21 @@ managedNodeGroups:
         externalDNS: true
         certManager: true
 
+  - name: standard-workers-medium
+    instanceType: t3.medium
+    minSize: 1
+    maxSize: 3
+    desiredCapacity: 2
+    volumeSize: 30
+    volumeType: gp3
+    ssh:
+      allow: false
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        externalDNS: true
+        certManager: true
+
 addons:
   - name: vpc-cni
   - name: coredns
