@@ -8,6 +8,7 @@ spec:
     email: de.gerardogmilian@gmail.com
     privateKeySecretRef:
       name: letsencrypt-prod
+    preferredChain: "ISRG Root X1"
     solvers:
       - dns01:
           route53:
@@ -18,4 +19,4 @@ spec:
               key: secret-access-key
         selector:
           dnsZones:
-            - app-vote-latin.com
+            - "app-vote-latin.com"
